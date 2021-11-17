@@ -1,0 +1,11 @@
+﻿GET http://www.columbia.edu/~fdc/sample.html HTTP/1.1
+Host: www.columbia.edu
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,ru-RU;q=0.8,ru;q=0.7
+Cookie: BIGipServer~CUIT~www.columbia.edu-80-pool=1764244352.20480.0000
+If-Modified-Since: Fri, 17 Sep 2021 19:26:14 GMT
