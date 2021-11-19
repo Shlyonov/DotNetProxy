@@ -1,6 +1,6 @@
 # DotNetProxy
 
- Simple .Net 6 http/https proxy server implementation using System.IO.Pipelines and Pipelines.Sockets.Unofficial for direct socket-pipe connect
+ Simple .Net 6 http/https proxy server implementation using System.IO.Pipelines and Pipelines.Sockets.Unofficial for direct socket-pipe connection
  
  &nbsp;
  
