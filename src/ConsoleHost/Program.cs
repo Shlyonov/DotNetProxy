@@ -12,7 +12,7 @@ namespace ConsoleHost
 {
     internal static class Program
     {
-        static async Task Main()
+        static void Main()
         {
             var host = AppStartup();
 

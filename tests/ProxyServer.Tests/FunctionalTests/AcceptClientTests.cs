@@ -53,12 +53,22 @@ namespace ProxyServer.Tests.FunctionalTests
             var startAsyncTask = Task.Run(async () => await proxyServer.StartAsync(port));
             WaitServerStart(proxyServer);
             var httpClient = CreateHttpClient(port);
+            HttpStatusCode? resultStatusCode;
 
             // act
-            var result = await httpClient.GetAsync(address);
+            try
+            {
+                var result = await httpClient.GetAsync(address);
+                resultStatusCode = result.StatusCode;
+            }
+            catch (HttpRequestException hre) when (hre.HResult == -2146233088) // .Net 6 bug
+            {
+                resultStatusCode = HttpStatusCode.BadGateway;
+            }            
 
             // assert
-            result.StatusCode.ShouldBe(HttpStatusCode.BadGateway);
+            resultStatusCode.ShouldNotBeNull();
+            resultStatusCode.ShouldBe(HttpStatusCode.BadGateway);
 
             // clean
             proxyServer.Stop();
@@ -104,12 +114,12 @@ namespace ProxyServer.Tests.FunctionalTests
                 UseDefaultCredentials = false
             };
 
-            var httpClientHandler = new HttpClientHandler
+            var httpHandler = new SocketsHttpHandler
             {
                 Proxy = proxy,
             };
 
-            var httpClient = new HttpClient(httpClientHandler);
+            var httpClient = new HttpClient(httpHandler);
 
             return httpClient;
         }
