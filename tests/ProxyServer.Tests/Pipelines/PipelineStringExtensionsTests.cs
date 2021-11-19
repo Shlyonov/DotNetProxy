@@ -95,7 +95,7 @@ namespace ProxyServer.Tests.Pipelines
         [Theory]
         [TextData("TestData/HttpRequest.txt")]
         [TextData("TestData/HttpsRequest.txt")]
-        public void PeekLineAsync_BadReader_ShouldThrowInvalidOperationException(string testText)
+        public async Task PeekLineAsync_BadReader_ShouldThrowInvalidOperationException(string testText)
         {
             // arrange
             var msWithText = new SlowMemoryStream(Encoding.ASCII.GetBytes(testText));
@@ -106,7 +106,7 @@ namespace ProxyServer.Tests.Pipelines
             var peekLineTask = pipeReader.PeekLineAsync();
 
             // assert
-            Should.Throw<InvalidOperationException>(async () => await peekLineTask);
+            await Should.ThrowAsync<InvalidOperationException>(async () => await peekLineTask);
         }
 
         [Theory]
@@ -114,7 +114,7 @@ namespace ProxyServer.Tests.Pipelines
         [TextData("TestData/SimpleTestTextCRLF.txt")]
         [TextData("TestData/HttpRequest.txt")]
         [TextData("TestData/HttpsRequest.txt")]
-        public void PeekLineAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText)
+        public async Task PeekLineAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText)
         {
             // arrange
             var msWithText = new SlowMemoryStream(Encoding.ASCII.GetBytes(testText));
@@ -125,7 +125,7 @@ namespace ProxyServer.Tests.Pipelines
             var peekLineTask = pipeReader.PeekLineAsync(cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await peekLineTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await peekLineTask);
 
             // clean
             cts.Dispose();
@@ -184,7 +184,7 @@ namespace ProxyServer.Tests.Pipelines
         [Theory]
         [TextData("TestData/HttpRequest.txt")]
         [TextData("TestData/HttpsRequest.txt")]
-        public void ReadLineAsync_BadReader_ShouldThrowInvalidOperationException(string testText)
+        public async Task ReadLineAsync_BadReader_ShouldThrowInvalidOperationException(string testText)
         {
             // arrange
             var msWithText = new SlowMemoryStream(Encoding.ASCII.GetBytes(testText));
@@ -195,7 +195,7 @@ namespace ProxyServer.Tests.Pipelines
             var peekLineTask = pipeReader.PeekLineAsync();
 
             // assert
-            Should.Throw<InvalidOperationException>(async () => await peekLineTask);
+            await Should.ThrowAsync<InvalidOperationException>(async () => await peekLineTask);
         }
 
         [Theory]
@@ -203,7 +203,7 @@ namespace ProxyServer.Tests.Pipelines
         [TextData("TestData/SimpleTestTextCRLF.txt")]
         [TextData("TestData/HttpRequest.txt")]
         [TextData("TestData/HttpsRequest.txt")]
-        public void ReadLineAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText)
+        public async Task ReadLineAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText)
         {
             // arrange
             var msWithText = new SlowMemoryStream(Encoding.ASCII.GetBytes(testText));
@@ -214,7 +214,7 @@ namespace ProxyServer.Tests.Pipelines
             var peekLineTask = pipeReader.PeekLineAsync(cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await peekLineTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await peekLineTask);
 
             // clean
             cts.Dispose();
@@ -248,7 +248,7 @@ namespace ProxyServer.Tests.Pipelines
 
         [Theory]
         [InlineData("Test line")]
-        public void WriteLineAsync_BadWriter_ShouldThrowInvalidOperationException(string testText)
+        public async Task WriteLineAsync_BadWriter_ShouldThrowInvalidOperationException(string testText)
         {
             // arrange
             var msForWrite = new SlowMemoryStream();
@@ -260,13 +260,13 @@ namespace ProxyServer.Tests.Pipelines
             var writeLineTask = pipeWriter.WriteLineAsync(bytesToWrite);
 
             // assert
-            Should.Throw<InvalidOperationException>(async () => await writeLineTask);
+            await Should.ThrowAsync<InvalidOperationException>(async () => await writeLineTask);
         }
 
         [Theory]
         [InlineData("GET www.google.com:443 HTTP/1.1")]
         [InlineData("Test line")]
-        public void WriteLineAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText)
+        public async Task WriteLineAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText)
         {
             // arrange
             var msForWrite = new SlowMemoryStream();
@@ -278,7 +278,7 @@ namespace ProxyServer.Tests.Pipelines
             var writeLineTask = pipeWriter.WriteLineAsync(bytesToWrite, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await writeLineTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await writeLineTask);
 
             // clean
             cts.Dispose();

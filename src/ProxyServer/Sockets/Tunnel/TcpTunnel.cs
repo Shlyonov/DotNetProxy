@@ -57,7 +57,7 @@ namespace ProxyServer.Sockets.Tunnel
                 // it's ok RST packet received, which indicates an immediate dropping of the connection
                 // tunnel ended
             }
-            catch (OperationCanceledException oce) when (oce.CancellationToken == tunnelCancellationTokenSource.Token)
+            catch (OperationCanceledException) when (tunnelCancellationTokenSource.IsCancellationRequested)
             {
                 // it's ok, tunnel ended
             }
@@ -87,7 +87,7 @@ namespace ProxyServer.Sockets.Tunnel
                 // it's ok RST packet received, which indicates an immediate dropping of the connection,
                 // tunnel ended
             }
-            catch (OperationCanceledException oce) when (oce.CancellationToken == tunnelCancellationTokenSource.Token)
+            catch (OperationCanceledException) when (tunnelCancellationTokenSource.IsCancellationRequested)
             {
                 // it's ok, tunnel ended
             }

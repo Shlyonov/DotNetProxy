@@ -82,52 +82,13 @@ namespace ProxyServer.Tests.Sockets.Tunnel
             var sw = new Stopwatch();
             sw.Start();
 
-            // act
+            // act            
             await tcpTunnel.StartTunnelAsync(duplexPipeLocal.Object, duplexPipeRemote.Object);
             
             // assert
             sw.Stop();
             // DelayedCompleteMemoryStream read time 100 to 1000
             sw.ElapsedMilliseconds.ShouldBeLessThan(200);
-        }
-        
-        [Theory]
-        [TextData2("TestData/SimpleTestTextLF.txt", "TestData/SimpleTestTextCRLF.txt")]
-        public async Task StartTunnelAsync_CancellationRequested_ShouldThrowOperationCanceledException(string testText1, string testText2)
-        {
-            // arrange
-            var msWithText1 = new DelayedCompleteMemoryStream(Encoding.ASCII.GetBytes(testText1));
-            var pipeReader1 = PipeReader.Create(msWithText1);
-            var msForWrite1 = new MemoryStream();
-            var pipeWriter1 = PipeWriter.Create(msForWrite1);
-            
-            var msWithText2 = new DelayedCompleteMemoryStream(Encoding.ASCII.GetBytes(testText2));
-            var pipeReader2 = PipeReader.Create(msWithText2);
-            var msForWrite2 = new MemoryStream();
-            var pipeWriter2 = PipeWriter.Create(msForWrite2);
-            
-            var tunnelOptionsMock = new Mock<ITunnelOptions>();
-            tunnelOptionsMock.Setup(i => i.KeepAliveTimeout).Returns(30000);
-            var tcpTunnel = new TcpTunnel(tunnelOptionsMock.Object);
-            
-            var duplexPipeLocal = new Mock<IDuplexPipe>();
-            duplexPipeLocal.Setup(i => i.Input).Returns(pipeReader1);
-            duplexPipeLocal.Setup(i => i.Output).Returns(pipeWriter1);
-            
-            var duplexPipeRemote = new Mock<IDuplexPipe>();
-            duplexPipeRemote.Setup(i => i.Input).Returns(pipeReader2);
-            duplexPipeRemote.Setup(i => i.Output).Returns(pipeWriter2);
-
-            var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100));
-
-            // act
-            var startTunnelTask = tcpTunnel.StartTunnelAsync(duplexPipeLocal.Object, duplexPipeRemote.Object, cts.Token);
-            
-            // assert
-            Should.Throw<OperationCanceledException>(async () => await startTunnelTask);
-            
-            // clean
-            cts.Dispose();
-        }
+        }       
     }
 }

@@ -6,11 +6,12 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using ProxyServer.Tests.Fixtures;
+using ProxyServer.Tests.TestConstants;
 using Shouldly;
 using Xunit;
 
 namespace ProxyServer.Tests.FunctionalTests
-{
+{    
     public class AcceptClientTests
     {
         private readonly NetProxyServerFixture _netProxyServerFixture;
@@ -20,9 +21,9 @@ namespace ProxyServer.Tests.FunctionalTests
             _netProxyServerFixture = new NetProxyServerFixture();
         }
 
-        [Theory]
-        [InlineData(12300, "http://www.columbia.edu/~fdc/sample.html")]
-        [InlineData(12300, "https://google.com")]
+        [Theory]        
+        [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "http://www.columbia.edu/~fdc/sample.html")]
+        [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "https://google.com")]
         public async Task AcceptClient_ProperUrl_ShouldOk(int port, string address)
         {
             // arrange
@@ -44,7 +45,7 @@ namespace ProxyServer.Tests.FunctionalTests
         }
 
         [Theory]
-        [InlineData(12300, "https://gooTYTYTYTYgle.col")]
+        [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "https://gooTYTYTYTYgle.col")]
         public async Task AcceptClient_BadUrl_ShouldReturnBadGateway(int port, string address)
         {
             // arrange
@@ -65,8 +66,8 @@ namespace ProxyServer.Tests.FunctionalTests
         }
 
         [Theory]
-        [InlineData(12300, "GET jdjskdskdfh HTTP/1.1")]
-        [InlineData(12300, "GET https:www.google.com HTFP/1.1")]
+        [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "GET jdjskdskdfh HTTP/1.1")]
+        [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "GET https:www.google.com HTFP/1.1")]
         public async Task AcceptClient_BadUrl_ShouldReturnBadRequest(int port, string requestHeader)
         {
             // arrange
@@ -117,7 +118,7 @@ namespace ProxyServer.Tests.FunctionalTests
         {
             var startTime = 0;
             var checkPeriod = 100;
-            while (startTime < 5000)
+            while (startTime < 10000)
             {
                 Thread.Sleep(checkPeriod);
                 if (netProxyServer.Active)

@@ -57,7 +57,7 @@ namespace ProxyServer.Tests.Pipelines
             var readToTask = pipeReader.ReadToAsync(pipeWriter, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await readToTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await readToTask);
             
             // clean
             cts.Dispose();

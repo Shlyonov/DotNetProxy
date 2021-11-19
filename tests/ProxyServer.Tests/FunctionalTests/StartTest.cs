@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ProxyServer.Tests.Fixtures;
+using ProxyServer.Tests.TestConstants;
 using Shouldly;
 using Xunit;
 
@@ -16,8 +17,8 @@ namespace ProxyServer.Tests.FunctionalTests
         }
         
         [Theory]
-        [InlineData(12300, 100, 5000)]
-        public async Task Start_NoOptions_ShouldOk(int port, int checkPeriodMs, int maxStartTimeMs)
+        [InlineData(FunctionalTestsConstants.StartTestsPort, 100, 10000)]
+        public void Start_NoOptions_ShouldOk(int port, int checkPeriodMs, int maxStartTimeMs)
         {
             bool WaitServerStart(INetProxyServer netProxyServer)
             {
@@ -51,8 +52,8 @@ namespace ProxyServer.Tests.FunctionalTests
         }
         
         [Theory]
-        [InlineData(12300, 100, 5000)]
-        public async Task Start_SomeOptions_ShouldOk(int port, int checkPeriodMs, int maxStartTimeMs)
+        [InlineData(FunctionalTestsConstants.StartTestsPort, 100, 10000)]
+        public void Start_SomeOptions_ShouldOk(int port, int checkPeriodMs, int maxStartTimeMs)
         {
             bool WaitServerStart(INetProxyServer netProxyServer)
             {

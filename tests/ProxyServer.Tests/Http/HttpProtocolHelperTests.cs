@@ -66,7 +66,7 @@ namespace ProxyServer.Tests.Http
             var peekRequestHeaderTask = httpProtocolHelper.PeekRequestHeaderAsync(pipeReader);
 
             // assert
-            Should.Throw<BadRequestException>(async () => await peekRequestHeaderTask);
+            await Should.ThrowAsync<BadRequestException>(async () => await peekRequestHeaderTask);
         }
 
         [Theory]
@@ -83,7 +83,7 @@ namespace ProxyServer.Tests.Http
             var readToTask = httpProtocolHelper.PeekRequestHeaderAsync(pipeReader, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await readToTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await readToTask);
 
             // clean
             cts.Dispose();
@@ -154,7 +154,7 @@ namespace ProxyServer.Tests.Http
             var skipToEndTask = httpProtocolHelper.SkipToEndAsync(pipeReader, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await skipToEndTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await skipToEndTask);
         }
 
         #endregion
@@ -192,7 +192,7 @@ namespace ProxyServer.Tests.Http
             var writeConnectionOkTask = httpProtocolHelper.WriteConnectionOkAsync(pipeWriter);
 
             // assert
-            Should.Throw<InvalidOperationException>(async () => await writeConnectionOkTask);
+            await Should.ThrowAsync<InvalidOperationException>(async () => await writeConnectionOkTask);
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace ProxyServer.Tests.Http
             var writeConnectionOkTask = httpProtocolHelper.WriteConnectionOkAsync(pipeWriter, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await writeConnectionOkTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await writeConnectionOkTask);
 
             // clean
             cts.Dispose();
@@ -246,7 +246,7 @@ namespace ProxyServer.Tests.Http
             var writeBadRequestTask = httpProtocolHelper.WriteBadRequestAsync(pipeWriter);
 
             // assert
-            Should.Throw<InvalidOperationException>(async () => await writeBadRequestTask);
+            await Should.ThrowAsync<InvalidOperationException>(async () => await writeBadRequestTask);
         }
 
         [Fact]
@@ -262,7 +262,7 @@ namespace ProxyServer.Tests.Http
             var writeConnectionOkTask = httpProtocolHelper.WriteBadRequestAsync(pipeWriter, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await writeConnectionOkTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await writeConnectionOkTask);
 
             // clean
             cts.Dispose();
@@ -300,7 +300,7 @@ namespace ProxyServer.Tests.Http
             var writeBadGatewayTask = httpProtocolHelper.WriteBadGatewayAsync(pipeWriter);
 
             // assert
-            Should.Throw<InvalidOperationException>(async () => await writeBadGatewayTask);
+            await Should.ThrowAsync<InvalidOperationException>(async () => await writeBadGatewayTask);
         }
 
         [Fact]
@@ -316,7 +316,7 @@ namespace ProxyServer.Tests.Http
             var writeConnectionOkTask = httpProtocolHelper.WriteBadGatewayAsync(pipeWriter, cts.Token);
 
             // assert
-            Should.Throw<OperationCanceledException>(async () => await writeConnectionOkTask);
+            await Should.ThrowAsync<OperationCanceledException>(async () => await writeConnectionOkTask);
 
             // clean
             cts.Dispose();
