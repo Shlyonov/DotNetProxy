@@ -62,7 +62,7 @@ namespace ProxyServer.Tests.FunctionalTests
                 var result = await httpClient.GetAsync(address);
                 resultStatusCode = result.StatusCode;
             }
-            catch (HttpRequestException hre) when (hre.HResult == -2146233088) // .Net 6 bug
+            catch (HttpRequestException hre) when (hre.HResult == -2146233088) // .Net 6 now throws if CONNECT error
             {
                 resultStatusCode = HttpStatusCode.BadGateway;
             }            
