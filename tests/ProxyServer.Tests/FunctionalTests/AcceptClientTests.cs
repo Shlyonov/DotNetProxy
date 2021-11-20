@@ -45,6 +45,7 @@ namespace ProxyServer.Tests.FunctionalTests
         }
 
         [Theory]
+        [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "http://gooTYTYTYTYgle.col")]
         [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "https://gooTYTYTYTYgle.col")]
         public async Task AcceptClient_BadUrl_ShouldReturnBadGateway(int port, string address)
         {
