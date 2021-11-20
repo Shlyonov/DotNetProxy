@@ -78,7 +78,7 @@ namespace ProxyServer.Tests.FunctionalTests
         [Theory]
         [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "GET jdjskdskdfh HTTP/1.1")]
         [InlineData(FunctionalTestsConstants.AcceptClientsTestsPort, "GET https:www.google.com HTFP/1.1")]
-        public async Task AcceptClient_BadUrl_ShouldReturnBadRequest(int port, string requestHeader)
+        public async Task AcceptClient_BadRequestHeaders_ShouldReturnBadRequest(int port, string requestHeader)
         {
             // arrange
             var proxyServer = _netProxyServerFixture.GetProxyServer();
