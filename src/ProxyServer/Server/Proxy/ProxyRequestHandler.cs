@@ -119,11 +119,7 @@ namespace ProxyServer.Server.Proxy
                     // write BadRequest
                     await _httpProtocolHelper.WriteBadRequestAsync(localPipe.Output, cancellationToken);
                 }
-            }
-            // catch (SocketException se)
-            // {
-            //     await HandleSocketException(se, clientHandler, httpRequestContext, cancellationToken);
-            // }
+            }            
             catch (OperationCanceledException)
             {
                 // it's ok
