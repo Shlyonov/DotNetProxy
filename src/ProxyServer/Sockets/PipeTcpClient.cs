@@ -120,7 +120,7 @@ namespace ProxyServer.Sockets
             if (ConnectTimeout > 0)
                 connectCancellationSource.CancelAfter(ConnectTimeout);
 
-            var isTimeouts = false;
+            var isTimeout = false;
 
             try
             {
@@ -130,12 +130,12 @@ namespace ProxyServer.Sockets
                                                          && connectCancellationSource.IsCancellationRequested)
             {
                 Interlocked.Exchange(ref _internalClientDisposed, 1);
-                isTimeouts = true;
+                isTimeout = true;
             }
 
             connectCancellationSource.Dispose();
 
-            if (isTimeouts)
+            if (isTimeout)
                 throw new SocketException((int) SocketError.OperationAborted);
         }
 
