@@ -7,7 +7,7 @@ namespace ProxyServer.Tests.TestUtils.StreamTestHelpers
 {
     public class DelayedCompleteMemoryStream : MemoryStream
     {
-        private const int _delayAfterRead = 1000;
+        private const int _delayAfterReadMs = 1000;
 
         public DelayedCompleteMemoryStream() : base()
         {
@@ -20,12 +20,12 @@ namespace ProxyServer.Tests.TestUtils.StreamTestHelpers
         }
     
         public override async ValueTask<int> ReadAsync(Memory<byte> destination,
-            CancellationToken cancellationToken = new CancellationToken())
+            CancellationToken cancellationToken = new())
         {
             await Task.Delay(100, cancellationToken);
             var read = await base.ReadAsync(destination, cancellationToken);
             if(read == 0)
-                Thread.Sleep(_delayAfterRead);
+                await Task.Delay(_delayAfterReadMs, cancellationToken);
             return read;
         }
     }

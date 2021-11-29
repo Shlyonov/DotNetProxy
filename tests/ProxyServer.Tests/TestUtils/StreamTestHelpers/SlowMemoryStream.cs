@@ -16,16 +16,16 @@ namespace ProxyServer.Tests.TestUtils.StreamTestHelpers
         
         }
     
-        public override ValueTask<int> ReadAsync(Memory<byte> destination, CancellationToken cancellationToken = new CancellationToken())
+        public override async ValueTask<int> ReadAsync(Memory<byte> destination, CancellationToken cancellationToken = new())
         {
-            Thread.Sleep(1000);
-            return base.ReadAsync(destination, cancellationToken);
+            await Task.Delay(1000, cancellationToken);
+            return await base.ReadAsync(destination, cancellationToken);
         }
 
-        public override ValueTask WriteAsync(ReadOnlyMemory<byte> source, CancellationToken cancellationToken = new CancellationToken())
+        public override async ValueTask WriteAsync(ReadOnlyMemory<byte> source, CancellationToken cancellationToken = new())
         {
-            Thread.Sleep(1000);
-            return base.WriteAsync(source, cancellationToken);
+            await Task.Delay(1000, cancellationToken);
+            await base.WriteAsync(source, cancellationToken);
         }
     }
 }
